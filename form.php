@@ -25,25 +25,34 @@
 
 </head>
 
-<?php
 
+<?php
 $username = $email = $password = $gender = "";
 $isError = false;
 $nameErr = $emailErr = $genderErr = $passwordErr = "";
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //todo check if username is not empty
     if (empty($_POST["username"])) {
         $nameErr = "* Name is required";
         $isError = true;
     } else {
         $username = test_input($_POST["username"]);
     }
-
+    //todo check if email is not empty
     if (empty($_POST["email"])) {
         $emailErr = "* Email is required";
         $isError = true;
     } else {
         $email = test_input($_POST["email"]);
+    }
+    //todo check for gender
+    if (empty($_POST["gender"])) {
+        $genderErr = "* Gender is required";
+        $isError = true;
+    } else {
+        $gender = test_input($_POST["gender"]);
     }
 
     if (!$isError) {
@@ -51,13 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION['username'] = $username;
         $_SESSION['email'] = $email;
-        header("Location: welcome.php?name=$username&email=$email");
+        $_SESSION['gender'] = $gender;
+        header("Location: welcome.php?username=$username&email=$email&gender=$gender");
         exit();
     }
 }
 
 
-//!below checks if there no whitespace or anything
+// todo below checks if there no whitespace or anything while sending data to server
 function test_input($data)
 {
     $data = trim($data);
@@ -102,16 +112,28 @@ function test_input($data)
                     value="<?php echo $password ?>"
                     class="rounded-xl w-full px-2 py-3 outline-none hover:scale-105 duration-300">
 
-                <div class="px-2 flex justify-evenly items-center">
+                <div class="px-2 flex justify-evenly items-center relative">
 
                     <label for="male" class="flex items-center gap-2">
                         Male
-                        <input type="radio" name="gender" id="male" value="Male" class="accent-blue-700">
+                        <input
+                            type="radio"
+                            name="gender"
+                            checked="checked"
+                            id=" male"
+                            value="Male"
+                            class="accent-blue-700">
                     </label>
                     <label for="female" class="flex items-center gap-2">
                         Female
-                        <input type="radio" name="gender" id="female" value="Female" class="accent-pink-500">
+                        <input
+                            type="radio"
+                            name="gender"
+                            id="female"
+                            value="Female"
+                            class="accent-pink-500">
                     </label>
+                    <small class="absolute top-[120px] text-red-600"> <?php echo $genderErr; ?></small>
                 </div>
 
                 <!-- todo Submit Button -->

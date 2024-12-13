@@ -26,20 +26,20 @@
 <?php
 // define variables and set to empty values
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = test_input($_POST["username"]);
-    $email = test_input($_POST["email"]);
-    $password = test_input($_POST["password"]);
-    $gender = test_input($_POST["gender"]);
-}
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $name = test_input($_POST["username"]);
+//     $email = test_input($_POST["email"]);
+//     $password = test_input($_POST["password"]);
+//     $gender = test_input($_POST["gender"]);
+// }
 
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+// function test_input($data)
+// {
+//     $data = trim($data);
+//     $data = stripslashes($data);
+//     $data = htmlspecialchars($data);
+//     return $data;
+// }
 ?>
 
 <body class="bg-gradient-to-r from-indigo-400 to-cyan-400 background-animate bg-cover">
@@ -48,31 +48,28 @@ function test_input($data)
 
             <h1 class="text-start text-4xl font-bold tracking-wide text-gray-100 select-none cursor-pointer">
                 Welcome <span class="text-black capitalize">
-                    <?php echo $_POST["username"]; ?>
+                    <?php echo $_REQUEST["username"]; ?>
                 </span><br>
                 Email:<span class="text-black">
-                    <?php echo $_POST["email"]; ?>
-                </span> <br>
-                Password: <span class="text-black">
-                    <?php echo $_POST["password"]; ?>
+                    <?php echo $_REQUEST["email"]; ?>
                 </span> <br>
                 Gender:<span class="text-black">
-                    <?php echo $_POST["gender"]; ?>
+                    <?php echo $_REQUEST["gender"]; ?>
                 </span> 
             </h1>
         </div>
     </div>
-    
+
     <!-- todo we check the given output below -->
     <?php
-    echo "<h2>Your Input:</h2>";
-    echo $name;
-    echo "<br>";
-    echo $email;
-    echo "<br>";
-    echo $password;
-    echo "<br>";
-    echo $gender;
+    // echo "<h2>Your Input:</h2>";
+    // echo $name;
+    // echo "<br>";
+    // echo $email;
+    // echo "<br>";
+    // echo $password;
+    // echo "<br>";
+    // echo $gender;
   
     ?>
 </body>
