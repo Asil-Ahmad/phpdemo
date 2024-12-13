@@ -1,0 +1,40 @@
+/* Apply global font style */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Poppins", serif;
+  margin: 0;
+  transition: all;
+  padding: 0;
+}
+
+/* Animate the background gradient */
+
+.background-animate {
+  background-size: 150%;
+
+  -webkit-animation: AnimationName 5s ease infinite;
+  -moz-animation: AnimationName 5s ease infinite;
+  animation: AnimationName 5s ease infinite;
+}
+
+@keyframes AnimationName {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Container padding for internal content */
+.container {
+  padding: 40px;
+}
+
+.nocontainer {
+  padding: 20px;
+}
