@@ -27,6 +27,7 @@
 
 
 <?php
+//todo we empty string after each submit
 $username = $email = $password = $gender = "";
 $isError = false;
 $nameErr = $emailErr = $genderErr = $passwordErr = "";
@@ -55,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gender = test_input($_POST["gender"]);
     }
 
+    //todo we here we redirect to new page with info using url
     if (!$isError) {
         // Redirect to welcome.php
         session_start();
