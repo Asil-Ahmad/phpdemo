@@ -78,8 +78,8 @@ function test_input($data)
 ?>
 
 <body class="bg-gradient-to-r from-indigo-400 to-cyan-400 background-animate  bg-contain">
-    <div class="sm:container nocontainer h-screen flex justify-center items-center">
-        <div class="flex flex-col items-center gap-5 bg-white/20 lg:w-[30%] md:w-[50%] sm:w-full p-4 rounded-xl">
+    <div class="w-full h-screen flex justify-center items-center m-auto">
+        <div class="flex flex-col items-center gap-5 bg-white/20 md:w-[40%] lg:w-[30%] xl:w-[25%]  max-sm:w-full mx-2 p-4 rounded-xl">
 
             <h1 class="text-center text-4xl font-bold tracking-wide text-gray-100 select-none cursor-pointer">Sign Up</h1>
 
@@ -133,7 +133,7 @@ function test_input($data)
                             value="Female"
                             class="accent-pink-500">
                     </label>
-                    <small class="absolute top-[120px] text-red-600"> <?php echo $genderErr; ?></small>
+                    <small class="absolute top-[90%] text-red-600"> <?php echo $genderErr; ?></small>
                 </div>
 
                 <!-- todo Submit Button -->
