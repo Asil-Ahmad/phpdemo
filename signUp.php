@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
-                }
-            }
-        }
-    </script>
-    <title>PHP Form</title>
-
-</head>
+<?php
+session_start();
+include 'includes/head.php'; //you have to include head.php in each file
+?>
 
 
 <?php
@@ -34,58 +12,60 @@ $nameErr = $emailErr = $genderErr = $passwordErr = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //todo check if username is not empty
-    if (empty($_POST["username"])) {
+    //todo check if username or email or gender is not empty
+    if (empty($_POST["username"]) || empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["gender"])) {
+
         $nameErr = "* Name is required";
-        $isError = true;
-    } else {
-        $username = test_input($_POST["username"]);
-    }
-    //todo check if email is not empty
-    if (empty($_POST["email"])) {
         $emailErr = "* Email is required";
-        $isError = true;
-    } else {
-        $email = test_input($_POST["email"]);
-    }
-    //todo check for gender
-    if (empty($_POST["gender"])) {
+        $passwordlErr = "* Password is required";
         $genderErr = "* Gender is required";
         $isError = true;
     } else {
-        $gender = test_input($_POST["gender"]);
+        $username = ($_POST["username"]);
+        $email = ($_POST["email"]);
+        $password = ($_POST["password"]);
+        $gender = ($_POST["gender"]);
+        $isError = false;
+
+        $_SESSION["username"] = $_POST["username"];
+        $_SESSION["email"] = $_POST["email"];
+        $_SESSION["gender"] = $_POST["gender"];
     }
+
 
     //todo we here we redirect to new page with info using url
     if (!$isError) {
-        // Redirect to welcome.php
-        session_start();
+        //todo if no error it will Redirect to welcome.php
         $_SESSION['username'] = $username;
         $_SESSION['email'] = $email;
         $_SESSION['gender'] = $gender;
-        header("Location: welcome.php?username=$username&email=$email&gender=$gender");
+        header("Location: welcome.php");
         exit();
     }
 }
 
 
 // todo below checks if there no whitespace or anything while sending data to server
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+// function test_input($data)
+// {
+//     $data = trim($data);
+//     $data = stripslashes($data);
+//     $data = htmlspecialchars($data);
+//     return $data;
+// }
 ?>
 
-<body class="bg-gradient-to-r from-indigo-400 to-cyan-400 background-animate  bg-contain">
+<section class="bg-gradient-to-r from-indigo-400 to-cyan-400 background-animate  bg-contain">
     <div class="w-full h-screen flex justify-center items-center m-auto">
-        <div class="flex flex-col items-center gap-5 bg-white/20 md:w-[40%] lg:w-[30%] xl:w-[25%]  max-sm:w-full mx-2 p-4 rounded-xl">
+        <div id="box" class="flex flex-col items-center gap-5 bg-white/20 md:w-[40%] lg:w-[30%] xl:w-[25%]  max-sm:w-full mx-2 p-4 rounded-xl">
 
-            <h1 class="text-center text-4xl font-bold tracking-wide text-gray-100 select-none cursor-pointer">Sign Up</h1>
+            <h1 class="text-center text-4xl font-bold tracking-wide text-gray-100 select-none cursor-pointer">
+                Sign Up
+            </h1>
 
-            <form method="POST" action="" class="flex flex-col gap-5 w-full relative">
+            <form method="POST"
+                action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                class="flex flex-col gap-5 w-full relative">
 
                 <!-- todo Username -->
                 <input
@@ -94,7 +74,7 @@ function test_input($data)
                     placeholder="Name"
                     pattern="[A-Za-z]+"
 
-                    value="<?php echo $username ?>"
+                    value=""
                     class="<?php echo $nameErr ? "border-[1.5px] border-red-500" : "border-[1.5px] border-transparent" ?> relative rounded-xl w-full px-2 py-3 outline-none hover:scale-105 duration-300">
                 <small class="absolute top-[50px] text-red-600"> <?php echo $nameErr; ?></small>
                 <!-- todo Email -->
@@ -103,7 +83,7 @@ function test_input($data)
                     name="email"
                     placeholder="Email"
 
-                    value="<?php echo $email ?>"
+                    value=""
                     class="<?php echo $emailErr ? "border-[1.5px] border-red-500" : "border-[1.5px] border-transparent" ?> relative rounded-xl w-full px-2 py-3 outline-none hover:scale-105 duration-300">
                 <small class="absolute top-[120px] text-red-600"> <?php echo $emailErr; ?></small>
                 <!-- todo Password -->
@@ -111,9 +91,10 @@ function test_input($data)
                     type="password"
                     name="password"
                     placeholder="Password"
-                    value="<?php echo $password ?>"
+                    value=""
                     class="rounded-xl w-full px-2 py-3 outline-none hover:scale-105 duration-300">
 
+                <!-- todo Gender -->
                 <div class="px-2 flex justify-evenly items-center relative">
 
                     <label for="male" class="flex items-center gap-2">
@@ -142,17 +123,19 @@ function test_input($data)
                 <input
                     type="submit"
                     value="Submit"
+                    name="submit"
                     class="bg-black/50 hover:bg-black duration-300 px-2 py-3 rounded-xl font-semibold text-gray-200 ">
-
             </form>
-
-
         </div>
-
-
-
     </div>
+    <script>
+        // GSAP Entrance Animation for the form
+        gsap.from("#box", {
+            duration: 1.5,
+            scale: 0.8,
+            opacity: 0,
+            ease: "elastic.out(1, 0.5)"
+        });
+    </script>
 
-</body>
-
-</html>
+</section>
